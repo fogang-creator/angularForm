@@ -1,13 +1,22 @@
-<h1>{{data.title }}</h1>
-<div mat-dialog-content class="content">
-  {{data.content}}  
-</div>
 
-<mat-dialog-actions >
-    <button  mat-button (click)="onConfirm()" class="button btn-save"> {{data.yes }}</button>
-    <button mat-button  (click)="onDismiss()" class="button btn-cancel"> {{data.no}}</button>
-  </mat-dialog-actions>
 
+  <form [formGroup]="produitForn" >
+    <h1> {{titre}} </h1>
+   <div class="form-row">
+     <div class="col-6 mt-9">
+       <label > Position : </label>
+       <input type="text" formControlName="Position">
+       <label > Name : </label>
+       <input type="text" formControlName="Name">
+       <label > Weight : </label>
+       <input type="text" formControlName="Weight">
+       <label > Symbole : </label>
+       <input type="text" formControlName="Symbole">
+     </div>
+   </div>
+    <button  mat-button (click)="onSubmit()" class="button btn-save"> Ajouter </button>
+    <button mat-button  (click)="onClose()" class="button btn-cancel"> Annuler </button>
+  </form>
 
 
 

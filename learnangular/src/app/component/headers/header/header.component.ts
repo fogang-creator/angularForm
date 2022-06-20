@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,10 @@ export class HeaderComponent implements OnInit {
 //authConnecte = this.userService.logeuser  non car formulaire non connecté
   ngOnInit(): void {
     
+  }
+
+  onLogout(){
+   this.userService.logout();
   }
 
   

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ELEMENT_DATA, ProduitElement } from 'src/app/models/produits.model';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PopupProduitComponent } from 'src/app/shared/popup-produit/popup-produit.component';
+import { ProduitsServce } from 'src/app/services/produits.service';
+import { ProduitElement } from 'src/app/models/produits.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,26 +13,58 @@ import { PopupProduitComponent } from 'src/app/shared/popup-produit/popup-produi
 })
 export class PageProduitComponent implements OnInit {
 
-  produits: ProduitElement[] = ELEMENT_DATA ;
+  produits!: ProduitElement[]  ;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  nproduit!: ProduitElement  ;
+  errorMess: string = ' ';
+  @Output() goToSearch = new EventEmitter<any>();
+  
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'action'];
   datas = this.produits;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private produitsService: ProduitsServce, private router:Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+this.produitsService.getProduits().subscribe({
+  next: produit =>{this.datas = produit;},
+  error: err=>{ this.errorMess= err;}
+});
+console.log(this.produitsService);
   }
   
   newProduit() {
-   const dataRef = this.dialog.open(PopupProduitComponent, {
-     data: {
-      title: "Ajout d'un nouveau produit",
-       content:" You should provide an accessible label to this root dialog element by setting the ariaLabel or ariaLabelledBy properties of MatDialogConfig. You can additionally specify a description element ID via the ariaDescribedBy property of MatDialogConfig.",
-       yes:" Ajouter",
-       no:" Annuler"
-     }
-   });
-   
+    const dialogConfig= new MatDialogConfig();
+    dialogConfig.disableClose= true;
+    dialogConfig.autoFocus= true;
+  
+   const dataRef = this.dialog.open(PopupProduitComponent, dialogConfig);
+
+  //  dataRef.afterClosed().subscribe((dialogResult)=>{
+  //    if(dialogResult){
+  //     console.log(dialogResult);
+  //      this.produitsService.createProduits(dialogResult).subscribe({
+  //       next: ()=> console.log(dialogResult)
+
+  //      })
+  //    }
+  //  })
 
   }
 
+  update(produitId:string ) {
+    const dialogConfig= new MatDialogConfig();
+    dialogConfig.disableClose= true;
+    dialogConfig.autoFocus= true;
+    dialogConfig.id = produitId;
+  
+   const dataRef = this.dialog.open(PopupProduitComponent, dialogConfig);
+  //  dataRef.afterClosed().subscribe( (result)=>{
+  //    if(result){
+  //      console.log(result);
+  //      result.id= produitId;
+  //    }
+   
+  //  })
+  }
+
+  
 }

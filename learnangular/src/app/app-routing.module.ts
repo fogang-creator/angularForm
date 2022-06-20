@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageHeaderComponent } from './component/page-header/page-header.component';
+import { PageHeaderComponent } from './component/headers/header/page-header/page-header.component';
 import { PageProduitComponent } from './component/produits/page-produit/page-produit.component';
-import { UsersComponent } from './component/users/users.component';
+import { UsersComponent } from './component/headers/users/users.component';
+import { FicheTitreComponent } from './component/reservation/fiche-titre/fiche-titre.component';
 
 const routes: Routes = [
   {path: "login" , component: UsersComponent},
+  //  { path: "produits/:id", component: PageProduitComponent},
   { path: "produits", component: PageProduitComponent},
   { path: "", redirectTo: "reservation", pathMatch: "full"},
-  {path: "reservation" , component:PageHeaderComponent}
+  {path: "reservation" , component:PageHeaderComponent},
+  {path: "fiche", component: FicheTitreComponent}
+  // {path: '**', redirectTo : 'login' , pathMatch:'full'}
 ];
 
 @NgModule({
