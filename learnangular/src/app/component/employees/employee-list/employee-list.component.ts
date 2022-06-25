@@ -1,4 +1,4 @@
-import { Employee } from './../../../shared/employee';
+import { Employee } from '../../../models/employee';
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
 
