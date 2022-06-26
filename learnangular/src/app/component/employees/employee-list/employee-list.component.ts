@@ -1,4 +1,4 @@
-import { Employee } from '../../../models/employee';
+import { Employee } from './../../../models/employee';
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
 
@@ -10,16 +10,22 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class EmployeeListComponent implements OnInit {
 
   employees!: Employee[];
+erreur:string = '';
+  displayedColumns:string[] = ['firstname', 'lastname' , 'emailid']
+
+  data =this.employees;
+
   constructor( private employeeService : EmployeeService) { }
 
   ngOnInit(): void {
     console.log("hello");
   
-    this.employeeService.getEmployeesList().subscribe(data=>{
-      console.log(data);
-      this.employees = data;
-      console.log(this.employees);
+    this.employeeService.getEmployeesList().subscribe({
+      next:elt=> {this.data = elt},
+      error:err=>{this.erreur=err}
     })
+    // console.log(this.data);
+    // console.log(this.erreur);
    
   }
 
