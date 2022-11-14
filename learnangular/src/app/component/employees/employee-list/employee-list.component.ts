@@ -10,6 +10,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class EmployeeListComponent implements OnInit {
 
   employees!: Employee[];
+  test!: string[];
 erreur:string = '';
   displayedColumns:string[] = ['firstname', 'lastname' , 'emailid']
 
@@ -24,6 +25,8 @@ erreur:string = '';
       next:elt=> {this.data = elt},
       error:err=>{this.erreur=err}
     })
+this.test=this.data?.map( res=>res.firstName);
+console.log(this.test);
     // console.log(this.data);
     // console.log(this.erreur);
    
